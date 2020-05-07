@@ -9,8 +9,11 @@
   <div class="row">
 
     <div class="col">
-        <div class="col img-flame-col">
-          <img src="{{ url_for('static', filename='img/flame.svg') }}" class="imgFlame blink_me">
+        <div id="flameOn" class="col img-flame-col">
+          <img src="{{ url_for('static', filename='img/flame.svg') }}" class="imgFlameOn blink_me">
+        </div>
+        <div id="flameOff" class="col img-flame-col">
+          <img src="{{ url_for('static', filename='img/flame.svg') }}" class="imgFlameOff">
         </div>
     </div>
 

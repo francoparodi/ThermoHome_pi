@@ -83,11 +83,18 @@ html, body {
     filter: var(--filters);
 }
 
-.imgFlame {
+.imgFlameOn {
     height: var(--data-img-height); 
     margin-top: var(--data-img-margin-top); 
     margin-left: var(--data-img-margin-left);
     filter: var(--filter-flame);
+}
+
+.imgFlameOff {
+    height: var(--data-img-height); 
+    margin-top: var(--data-img-margin-top); 
+    margin-left: var(--data-img-margin-left);
+    filter: var(--filters);
 }
 
 .temperature {

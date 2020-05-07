@@ -15,11 +15,19 @@ function socketIOinit() {
         var temperature = jObj._EnvironmentData__temperature;
         var humidity = jObj._EnvironmentData__humidity;
         var sensorSimulation = jObj._EnvironmentData__sensorSimulation;
+        var temperatureReached = jObj._EnvironmentData__temperatureReached;
         console.log(jObj);
         if (sensorSimulation) {
             document.getElementById('sensorSimulation').style.display = 'block';
         } else {
             document.getElementById('sensorSimulation').style.display ='none';
+        }
+        if (!temperatureReached) {
+            document.getElementById('flameOn').style.display = 'none';
+            document.getElementById('flameOff').style.display = 'block';
+        } else {
+            document.getElementById('flameOn').style.display = 'block';
+            document.getElementById('flameOff').style.display = 'none';
         }
         document.getElementById('temperature').innerHTML = temperature;
         document.getElementById('humidity').innerHTML = humidity;

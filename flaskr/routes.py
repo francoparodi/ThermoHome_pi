@@ -22,7 +22,9 @@ stop_event = threading.Event()
 daemon = threading.Thread()
 isDaemonStarted = False
 
+temperatureReached = False
 environmentData = EnvironmentData()
+
 
 view = Blueprint("view", __name__)
 
@@ -119,6 +121,7 @@ def setEnvironmentDataValues():
     getEnvironmentData().set_temperatureUm(temperatureUm)  
     getEnvironmentData().set_humidityUm(humidityUm)
     getEnvironmentData().set_sensorSimulation(sensorSimulation)
+    getEnvironmentData().set_temperatureReached(temperatureReached)
 
 def getEnvironmentData():
     return environmentData

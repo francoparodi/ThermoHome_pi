@@ -38,6 +38,7 @@ class EnvironmentData(object):
         self.__temperatureUm = '°C'  
         self.__humidityUm = '%'
         self.__sensorSimulation = False
+        self.__temperatureReached = False
 
     # getters
     def get_dateTime(self):
@@ -58,6 +59,9 @@ class EnvironmentData(object):
     def get_sensorSimulation(self):
         return self.__sensorSimulation
 
+    def get_temperatureReached(self):
+        return self.__temperatureReached
+
     # setters
     def set_dateTime(self, value):
         self.__dateTime = value
@@ -77,6 +81,9 @@ class EnvironmentData(object):
     def set_sensorSimulation(self, value):
         self.__sensorSimulation = value
 
+    def set_temperatureReached(self, value):
+        self.__temperatureReached = value
+
     def __repr__(self):
         repr = "{0}, {1}, {2}, {3}, {4}, {5}, {6}".format(
             { self.__dateTime },
@@ -84,7 +91,8 @@ class EnvironmentData(object):
             { self.__humidity },
             { self.__temperatureUm },
             { self.__humidityUm },
-            { self.__sensorSimulation }
+            { self.__sensorSimulation },
+            { self.__temperatureReached }
         )
         return repr
 

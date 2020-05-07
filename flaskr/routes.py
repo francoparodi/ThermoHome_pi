@@ -22,9 +22,9 @@ stop_event = threading.Event()
 daemon = threading.Thread()
 isDaemonStarted = False
 
+temperatureToReach = 20
 temperatureReached = False
 environmentData = EnvironmentData()
-
 
 view = Blueprint("view", __name__)
 
@@ -46,7 +46,7 @@ def settings():
 @view.route("/update", methods=["POST"])
 def update():
     try:
-        requestDataToDB(request, db)
+        saveSettings(request, db)
         db.session.commit()
         return redirect("/")
     except Exception as e:
@@ -85,7 +85,7 @@ def on_handleDaemon(data):
         stop_event.clear()
         isDaemonStarted = False
 
-def requestDataToDB(request, db):
+def saveSettings(request, db):
     temperatureUm = request.form.get("temperatureUm")
     readFromSensorInterval = request.form.get("readFromSensorInterval")
 
@@ -121,6 +121,10 @@ def setEnvironmentDataValues():
     getEnvironmentData().set_temperatureUm(temperatureUm)  
     getEnvironmentData().set_humidityUm(humidityUm)
     getEnvironmentData().set_sensorSimulation(sensorSimulation)
+    if (temperatureToReach < temperature):
+        temperatureReached = False
+    else:
+        temperatureReached = True
     getEnvironmentData().set_temperatureReached(temperatureReached)
 
 def getEnvironmentData():

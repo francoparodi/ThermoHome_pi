@@ -1,0 +1,147 @@
+:root {
+    --filters: invert(50%) sepia(99%) saturate(1536%) hue-rotate(161deg) brightness(103%) contrast(108%);
+    --filter-flame: invert(12%) sepia(92%) saturate(6483%) hue-rotate(1deg) brightness(101%) contrast(114%);
+    --main-color: deepskyblue;
+    --data-img-height: 20px; 
+    --data-img-margin-top: 0px; 
+    --data-img-margin-left: 0px;
+    --data-txt-font-size: 55px;
+    --data-txt-margin-left: 0px;
+  }
+
+html, body {
+    max-width: -webkit-fill-available;
+}
+
+.navbar {
+    border-bottom: 1px solid var(--main-color);
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.navbar-dark .navbar-toggler {
+    border-color: var(--main-color)
+}
+
+.navbar-dark .navbar-toggler-icon {
+    filter: var(--filters);
+}
+
+.logo {
+    height: 40px;
+    filter: var(--filters);
+}
+
+.about {
+    height: 20px;
+}
+
+.about-text {
+    text-align: left;
+}
+
+.modal-content {
+    width: 96%;
+}
+
+.digitalClock {
+    font-size: 16px;
+    text-align: center;
+    color: var(--main-color);
+}
+
+.sensorSimulation {
+    font-size: 11px;
+    text-align: center;
+    color: var(--main-color);
+}
+
+.navbar-container {
+    max-width: 900px;
+}
+
+.content-container {
+    max-width: 900px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 0px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.imgTemperature {
+    height: var(--data-img-height); 
+    margin-top: var(--data-img-margin-top); 
+    margin-left: var(--data-img-margin-left);
+    filter: var(--filters);
+}
+
+.imgHumidity {
+    height: var(--data-img-height); 
+    margin-top: var(--data-img-margin-top); 
+    margin-left: var(--data-img-margin-left);
+    filter: var(--filters);
+}
+
+.imgFlame {
+    height: var(--data-img-height); 
+    margin-top: var(--data-img-margin-top); 
+    margin-left: var(--data-img-margin-left);
+    filter: var(--filter-flame);
+}
+
+.temperature {
+    font-size: var(--data-txt-font-size);
+    margin-left: var(--data-txt-margin-left);
+    color:var(--main-color);
+}
+
+.humidity {
+    font-size: var(--data-txt-font-size);
+    margin-left: var(--data-txt-margin-left);
+    color:var(--main-color);
+}
+
+.units-data-temperature {
+    font-size: 22px;
+    color:var(--main-color);
+}
+
+.units-data-div {
+    padding-left: 8px;
+    padding-right: 0px;
+    max-width: 20px;
+}
+
+.units-data-humidity {
+    font-size: 22px;
+    color:var(--main-color);
+}
+
+.img-data-col {
+    max-width: 10px;
+}
+
+.noUi-horizontal .noUi-handle {
+    border-radius: 15px;
+    background: var(--main-color);
+    border: none;
+    box-shadow: none;
+    width: 32px !important;
+}
+
+.form-control {
+    width: 50%;
+}
+
+.form-input-number {
+    width: 25%;
+}
+
+.blink_me {
+    animation: blinker 1s linear infinite;
+}
+  
+@keyframes blinker {  
+    50% { opacity: 0; }
+}

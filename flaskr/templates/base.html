@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.svg') }}">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+        
+        <!-- DARK MODE -->
+        <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.css">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/thermohome_pi.css') }}">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/nouislider.css') }}">
+
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/buttons/1.3.1/css/buttons.bootstrap4.min.css"/>
+
+        <title>ThermoHome Pi</title>
+    </head>
+
+    <body onload="initOnLoad();">
+        <script src="{{ url_for('static', filename='js/init.js') }}"></script>
+        
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+
+        <script src="{{ url_for('static', filename='js/socketIO.js') }}"></script>
+
+        <script src="{{ url_for('static', filename='js/nouislider.js') }}"></script>
+
+        <nav class="navbar navbar-expand-lg navbar-dark">
+
+            <a class="navbar-brand" href="{{ url_for('view.homepage') }}" data-toggle="tooltip" title="ThermoHome Pi">
+                <div>
+                    <div class="row">
+                        <div class="col">
+                            <img src="{{ url_for('static', filename='img/logo.svg') }}" class="logo">
+                        </div>
+                    </div>
+                </div>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>            
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto"> 
+                    <li class="nav-item active">
+                        <a class="nav-item nav-link" href="{{ url_for('view.homepage') }}" title="Home">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-item nav-link" href="{{ url_for('view.settings') }}" title="Settings">
+                            Settings
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-item nav-link" href="{{ url_for('view.settings') }}" data-toggle="modal"  data-target="#aboutModal" title="About">
+                            About
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+
+        <div>
+            <div class="row">
+                <div class="col">
+                    <p id="digitalClock" class="digitalClock"></p>
+                    <p id="sensorSimulation" class="sensorSimulation blink_me">Sensor not found, data simulation</p>
+                </div>
+            </div>
+        </div>
+
+        {% block content %}
+        {% endblock %}
+
+        <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="aboutModalLabel"> <img src="{{ url_for('static', filename='img/logo.svg') }}" class="logo about"> ThermoHome Pi </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <p class="about-text"> Home Thermostat control with <a href="https://www.raspberrypi.org/" rel="noopener noreferrer" target="_blank"> 
+                                    Raspberry Pi. </a>
+                                <br>
+                                Code at <a href="https://github.com/francoparodi/ThermoHome_pi.git" rel="noopener noreferrer" target="_blank"> ThermoHome Pi</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+    </body>
+
+</html>

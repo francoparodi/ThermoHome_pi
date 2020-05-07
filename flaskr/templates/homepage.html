@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div class="container content-container">
+
+  <div class="row">
+
+    <div class="col">
+        <div class="col img-flame-col">
+          <img src="{{ url_for('static', filename='img/flame.svg') }}" class="imgFlame blink_me">
+        </div>
+    </div>
+
+    <div class="col">
+      <div class="row">
+        <div class="col img-data-col">
+          <img src="{{ url_for('static', filename='img/temperature.svg') }}" class="imgTemperature">
+        </div>
+        <div class="col units-data-div">
+          <p class="units-data-temperature">{{ settings.temperatureUm }}</p>
+        </div>
+        <div class="col">
+          <p class="temperature" id="temperature"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="row">
+        <div class="col img-data-col">
+          <img src="{{ url_for('static', filename='img/humidity.svg') }}" class="imgHumidity">
+        </div>
+        <div class="col units-data-div">
+          <p class="units-data-humidity">{{ settings.humidityUm }}</p>
+        </div>
+        <div class="col">
+          <p class="humidity" id="humidity"></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+          
+</div>
+
+<div class="container content-container">
+
+</div>
+
+{% endblock %}

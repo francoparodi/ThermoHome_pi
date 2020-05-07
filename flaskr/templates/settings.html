@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container content-container">
+        <div class="mt-3">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-dark" role="alert">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        </div>
+    </div>
+
+    <div class="container content-container">
+        <form method="POST" action="/update">
+            <div class="form-group">
+
+                <div>
+                    <label for="temperatureUm">Temperature Units</label>
+                    <select type="text" class="form-control temperatureUm" id="temperatureUm" name="temperatureUm" >
+                        <option value="°C" {% if settings.temperatureUm == '°C' %} selected {% endif %}>° Celsius</option>
+                        <option value="°F" {% if settings.temperatureUm == '°F' %} selected {% endif %}>° Fahrenheit</option>
+                    </select>
+                </div> 
+ 
+                <div>
+                    <label id="sensorIntervalSliderLabel" for="readFromSensorIntervalSlider"></label>
+                    <input id="readFromSensorIntervalSliderValue" type="hidden" name="readFromSensorInterval" value="{{ settings.readFromSensorInterval }}">                    
+                    <div id="readFromSensorIntervalSlider"></div>
+                    <script>
+                        createSlider('readFromSensorIntervalSlider', 'readFromSensorIntervalSliderValue');
+                    </script>
+                </div>
+
+                <div>
+                    <label for="minDeltaDataTrigger">Temperature variation trigger</label>
+                    <input class="form-control form-input-number" type="number" value="{{ settings.minDeltaDataTrigger }}" name="minDeltaDataTrigger" min="0.1" max="50" step="0.1" id="minDeltaDataTrigger">
+                </div>
+
+                <div>
+                    <label for="temperatureCorrection">Temperature factor correction (+/-)</label>
+                    <input class="form-control form-input-number" type="number" value="{{ settings.temperatureCorrection }}" name="temperatureCorrection" min="-50.0" max="50.0" step="0.5" id="temperatureCorrection">
+                </div>
+
+                <div>
+                    <label for="humidityCorrection">Humidity factor correction (+/-)</label>
+                    <input class="form-control form-input-number" type="number" value="{{ settings.humidityCorrection }}" name="humidityCorrection" min="-50" max="50" step="1" id="humidityCorrection">
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a class="btn btn-primary" href="{{ url_for('view.homepage') }}" role="button">Back</a>
+        </form>
+    </div>
+
+{% endblock %}

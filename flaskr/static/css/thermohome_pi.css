@@ -2,10 +2,11 @@
     --filters: invert(50%) sepia(99%) saturate(1536%) hue-rotate(161deg) brightness(103%) contrast(108%);
     --filter-flame: invert(12%) sepia(92%) saturate(6483%) hue-rotate(1deg) brightness(101%) contrast(114%);
     --main-color: deepskyblue;
-    --data-img-height: 20px; 
+    --data-img-height: 18px; 
+    --flame-img-height: 34px;
     --data-img-margin-top: 0px; 
     --data-img-margin-left: 0px;
-    --data-txt-font-size: 55px;
+    --data-txt-font-size: 28px;
     --data-txt-margin-left: 0px;
   }
 
@@ -84,14 +85,14 @@ html, body {
 }
 
 .imgFlameOn {
-    height: var(--data-img-height); 
+    height: var(--flame-img-height); 
     margin-top: var(--data-img-margin-top); 
     margin-left: var(--data-img-margin-left);
     filter: var(--filter-flame);
 }
 
 .imgFlameOff {
-    height: var(--data-img-height); 
+    height: var(--flame-img-height); 
     margin-top: var(--data-img-margin-top); 
     margin-left: var(--data-img-margin-left);
     filter: var(--filters);
@@ -110,8 +111,19 @@ html, body {
 }
 
 .units-data-temperature {
-    font-size: 22px;
+    font-size: 14px;
     color:var(--main-color);
+}
+
+.units-data-humidity {
+    font-size: 14px;
+    color:var(--main-color);
+}
+
+.data-div {
+    padding-left: 2px;
+    padding-right: 0px;
+    max-width: fit-content;
 }
 
 .units-data-div {
@@ -120,21 +132,8 @@ html, body {
     max-width: 20px;
 }
 
-.units-data-humidity {
-    font-size: 22px;
-    color:var(--main-color);
-}
-
 .img-data-col {
     max-width: 10px;
-}
-
-.noUi-horizontal .noUi-handle {
-    border-radius: 15px;
-    background: var(--main-color);
-    border: none;
-    box-shadow: none;
-    width: 32px !important;
 }
 
 .form-control {
@@ -151,4 +150,40 @@ html, body {
   
 @keyframes blinker {  
     50% { opacity: 0; }
+}
+
+.noUi-tooltip {
+    font-size: 14px !important;
+    padding: 2px !important;
+    border: none !important;
+    background: none !important;
+    color: white !important;
+    right: -1px !important;
+}
+
+.noUi-handle {
+    /*border: 1px solid var(--main-color) !important;*/
+    border-radius: 3px;
+    /*background: var(--main-color) !important;*/
+    background: #375a7f !important;
+    cursor: default;
+    box-shadow: none !important;
+    width: 40px !important;
+    height: 19px !important;
+    right: -12px !important;
+}
+
+.noUi-connect {
+    background: var(--main-color) !important;
+}
+
+.noUi-marker {
+    display: none !important;
+}
+
+.noUi-pips {
+    display: none !important;
+}
+.sliderTime {
+    height: 400px;
 }

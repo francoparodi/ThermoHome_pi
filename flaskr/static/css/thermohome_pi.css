@@ -187,3 +187,10 @@ html, body {
 .sliderTime {
     height: 400px;
 }
+
+.numberTemperature {
+    width: 62px;
+    font-size: 18px;
+    height: 26px;
+    margin: 0px;
+}

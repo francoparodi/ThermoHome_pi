@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from config import Config, Logger
-from flaskr.models import db, Settings
+from flaskr.models import db, Settings, Schedule
 from flaskr import create_app
 
 print('Setup started (log to {0})'.format(Logger.LOG_FILENAME))
@@ -30,10 +30,40 @@ with app.test_request_context():
                 humidityCorrection = 0
                 )
     db.session.add(settings)
-
     db.session.commit()
+
+    Logger.logger.debug('Populate Schedule DB {0}'.format(database_file))
+    schedule = Schedule(
+                weekDay = 'SUN',
+                temperatureReference = 20.0,
+                temperatureUm = '°C',
+                timeBegin01 = 9.0,
+                timeEnd01 = 12.0,
+                timeBegin02 = 12.0,
+                timeEnd02 = 18.0,
+                timeBegin03 = 18.0,
+                timeEnd03 = 22.0
+                )
+    db.session.add(schedule)
+    db.session.commit()
+
+    weekDays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
+    for day in weekDays:
+        schedule = Schedule()
+        schedule.weekDay = day
+        schedule.temperatureReference = 20.0
+        schedule.temperatureUm = '°C'
+        schedule.timeBegin01 = 6.0
+        schedule.timeEnd01 = 8.5
+        schedule.timeBegin02 = 11.0
+        schedule.timeEnd02 = 14.0
+        schedule.timeBegin03 = 17.0
+        schedule.timeEnd03 = 22.5
+        db.session.add(schedule)
+        db.session.commit()
 
 Logger.logger.debug('Setup completed')
 print('Setup completed')
+
 
 exit()

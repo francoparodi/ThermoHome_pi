@@ -12,7 +12,12 @@
   }
 
 html, body {
-    max-width: -webkit-fill-available;
+   /* max-width: -webkit-fill-available; */
+}
+
+.bodyContainer {
+    padding-right: 0px;
+    padding-left: 0px;
 }
 
 .navbar {
@@ -212,12 +217,14 @@ html, body {
 }
 
 .allDayDataDiv {
-    max-width: fit-content;
     padding-left: 0px;
     padding-right: 0px;
 }
 
+.dayDiv {
+    text-align: center;
+}
+
 .rowAllDaysData {
     margin-right: -19px;
-    max-width: fit-content;
 }

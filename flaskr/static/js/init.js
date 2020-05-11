@@ -1,4 +1,4 @@
-var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+var options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit', second:'2-digit'  };
 var language = navigator.languages[0];
 
 function initOnLoad() {

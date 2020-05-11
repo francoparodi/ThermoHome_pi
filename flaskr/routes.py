@@ -175,7 +175,6 @@ def triggerActuator():
     day = datetime.today().isoweekday()
     todayReferenceTemperature = float(Schedule.query.get(day).temperatureReference)
     todayCurrentTemperature = getEnvironmentData().get_temperature()
-    print('Day:{0} Reference Temp:{1} Current Temp:{2}'.format(day, todayReferenceTemperature, todayCurrentTemperature))
     if (todayCurrentTemperature < todayReferenceTemperature):
         switch(True)
     else:

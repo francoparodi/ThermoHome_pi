@@ -28,14 +28,10 @@
                         <option value="°F" {% if settings.temperatureUm == '°F' %} selected {% endif %}>° Fahrenheit</option>
                     </select>
                 </div> 
- 
+
                 <div>
-                    <label id="sensorIntervalSliderLabel" for="readFromSensorIntervalSlider"></label>
-                    <input id="readFromSensorIntervalSliderValue" type="hidden" name="readFromSensorInterval" value="{{ settings.readFromSensorInterval }}">                    
-                    <div id="readFromSensorIntervalSlider"></div>
-                    <script>
-                        createSlider('readFromSensorIntervalSlider', 'readFromSensorIntervalSliderValue');
-                    </script>
+                    <label for="readFromSensorInterval">Read from sensor every (sec.)</label>
+                    <input class="form-control form-input-number" type="number" value="{{ settings.readFromSensorInterval }}" name="readFromSensorInterval" min="5" max="3600" step="1" id="readFromSensorInterval">
                 </div>
 
                 <div>

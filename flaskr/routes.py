@@ -105,7 +105,6 @@ def on_handleDaemon(data):
 def saveSettings(request, db):
     temperatureUm = request.form.get("temperatureUm")
     readFromSensorInterval = request.form.get("readFromSensorInterval")
-
     minDeltaDataTrigger = request.form.get("minDeltaDataTrigger")
     temperatureCorrection = request.form.get("temperatureCorrection")
     humidityCorrection = request.form.get("humidityCorrection")

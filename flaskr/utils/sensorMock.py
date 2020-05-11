@@ -2,9 +2,7 @@ import random
 
 class SensorMock(object):
 
-    def __init__(self):
-        self.__low_light = False
-        self.__pixels = []
+    DHT22 = 'DHT22'
 
     def get_temperature(self):
         return random.uniform(-20,50)
@@ -12,5 +10,5 @@ class SensorMock(object):
     def get_humidity(self):
         return random.uniform(0,99)
     
-    def read_retry(DHT_SENSOR, DHT_PIN):
-        return get_humidity(), get_temperature()
+    def read_retry(self, DHT_SENSOR, DHT_PIN):
+        return self.get_humidity(), self.get_temperature()

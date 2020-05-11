@@ -33,25 +33,11 @@ with app.test_request_context():
     db.session.commit()
 
     Logger.logger.debug('Populate Schedule DB {0}'.format(database_file))
-    schedule = Schedule(
-                weekDay = 'SUN',
-                temperatureReference = 20.0,
-                temperatureUm = '°C',
-                timeBegin01 = 9.0,
-                timeEnd01 = 12.0,
-                timeBegin02 = 12.0,
-                timeEnd02 = 18.0,
-                timeBegin03 = 18.0,
-                timeEnd03 = 22.0
-                )
-    db.session.add(schedule)
-    db.session.commit()
-
-    weekDays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
+    weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
     for day in weekDays:
         schedule = Schedule()
         schedule.weekDay = day
-        schedule.temperatureReference = 20.0
+        schedule.temperatureReference = 19.5
         schedule.temperatureUm = '°C'
         schedule.timeBegin01 = 6.0
         schedule.timeEnd01 = 8.5

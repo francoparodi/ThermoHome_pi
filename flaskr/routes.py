@@ -2,7 +2,7 @@ from datetime import datetime
 import threading, time, json, random
 from flask import current_app as app
 from flask import Blueprint, render_template, flash, request, redirect, copy_current_request_context
-from flaskr.models import db, Settings, EnvironmentData
+from flaskr.models import db, Settings, EnvironmentData, Schedule
 from flaskr.utils import umConversions
 
 sensorSimulation = False
@@ -29,22 +29,24 @@ environmentData = EnvironmentData()
 view = Blueprint("view", __name__)
 
 @view.context_processor
-def inject_settings():
+def inject():
     settings = Settings.query.get(1)
-    return dict(settings=settings)
+    schedule = Schedule.query.all()
+    return dict(settings=settings, schedule=schedule)
 
 @view.route("/")
 def homepage():
     settings = Settings.query.get(1)
-    return render_template("homepage.html", settings=settings)
+    schedule = Schedule.query.all()
+    return render_template("homepage.html", settings=settings, schedule=schedule)
 
 @view.route("/settings")
 def settings():
     settings = Settings.query.get(1)
     return render_template("settings.html", settings=settings)
 
-@view.route("/update", methods=["POST"])
-def update():
+@view.route("/updateSettings", methods=["POST"])
+def updateSettings():
     try:
         saveSettings(request, db)
         db.session.commit()
@@ -54,6 +56,18 @@ def update():
         print(e)
         flash(msg)
     return redirect("/settings")
+
+@view.route("/updateSchedule", methods=["POST"])
+def updateSchedule():
+    try:
+        saveSchedule(request, db)
+        db.session.commit()
+        return redirect("/")
+    except Exception as e:
+        msg = "Failed to update schedule"
+        print(e)
+        flash(msg)
+    return redirect("/homepage")
 
 @socketio.on('connect')
 def on_connect():
@@ -100,6 +114,27 @@ def saveSettings(request, db):
     settings.minDeltaDataTrigger = float( '0.0' if minDeltaDataTrigger == '' else minDeltaDataTrigger )
     settings.temperatureCorrection = float( '0.0' if temperatureCorrection == '' else temperatureCorrection )
     settings.humidityCorrection = int( '0' if humidityCorrection == '' else humidityCorrection )
+
+def saveSchedule(request, db):
+    weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
+    dayNr = 0
+    db.session.query(Schedule).delete()
+    for day in weekDays:
+        dayNr += 1
+        timeValues = request.form.get('timeValue'+str(dayNr)).split(",")
+        print('Day {0} TimeValues {1}'.format(dayNr, timeValues))
+        schedule = Schedule()
+        schedule.weekDay = day
+        schedule.temperatureReference = float(request.form.get('temperature'+str(dayNr)))
+        schedule.temperatureUm = Settings.query.get(1).temperatureUm
+        schedule.timeBegin01 = float(timeValues[0])
+        schedule.timeEnd01 = float(timeValues[1])
+        schedule.timeBegin02 = float(timeValues[2])
+        schedule.timeEnd02 = float(timeValues[3])
+        schedule.timeBegin03 = float(timeValues[4])
+        schedule.timeEnd03 = float(timeValues[5])
+        db.session.add(schedule)
+        db.session.commit()
 
 def setEnvironmentDataValues():
     temperatureCorrection = float(Settings.query.get(1).temperatureCorrection)

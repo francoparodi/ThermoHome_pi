@@ -16,8 +16,10 @@ function createTimeSlider(sliderId, sliderValueId) {
     };
     var slider = document.getElementById(sliderId);
     var sliderValue = document.getElementById(sliderValueId);
+    sliderValues = sliderValue.value.split(',');
+    console.log(sliderValues);
         noUiSlider.create(slider, {
-            start: [7.0, 9.0, 11.0, 14.0, 17.0, 22.0],
+            start: sliderValues,
             connect: [false, true, false, true, false, true, false],
             range: range,
             tooltips: true,
@@ -53,9 +55,31 @@ function createTimeSlider(sliderId, sliderValueId) {
             }
     });
 
-    slider.noUiSlider.on('update', function (values, handle, sliderValue) {    
-        sliderValue.value = values[handle];
+    slider.noUiSlider.on('update', function (values, handle, sliderValue) {
+        console.log('Previous values:' + sliderValue);
+        console.log('Values to apply:' + values);
+        console.log('Single value:' + values[handle]);
+        //From xx:xx to x.x
+        var value = formattedStringToTime(values[handle]);
+        console.log('Value converted:' + value);
+        sliderValue.value = value;
+        console.log('Values applied:' + sliderValue)
     });
 }
 
+function timeToFormattedString(t){
+
+}
+
+function formattedStringToTime(s) {
+    var strValue = String(s).split(":");
+    var hh = strValue[0];
+    var mm = "0";
+    if (strValue.length > 1) {
+        if (strValue[1].startsWith("3")){
+            mm = "5";
+        }
+    } 
+    return hh + "." + mm;
+}
 

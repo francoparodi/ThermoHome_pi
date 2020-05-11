@@ -33,7 +33,7 @@ with app.test_request_context():
     db.session.commit()
 
     Logger.logger.debug('Populate Schedule DB {0}'.format(database_file))
-    weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
+    weekDays = [1,2,3,4,5,6,7]
     for day in weekDays:
         schedule = Schedule()
         schedule.weekDay = day
@@ -50,6 +50,5 @@ with app.test_request_context():
 
 Logger.logger.debug('Setup completed')
 print('Setup completed')
-
 
 exit()

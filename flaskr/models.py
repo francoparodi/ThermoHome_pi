@@ -103,7 +103,7 @@ class EnvironmentData(object):
 class Schedule(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, default=datetime.now)
-    weekDay = db.Column(db.String(3), unique=True)
+    weekDay = db.Column(db.Integer, unique=True)
     temperatureReference = db.Column(db.Float(1), unique=False, default=20.0)
     temperatureUm = db.Column(db.String(2), unique=False, default='°C')
     timeBegin01 = db.Column(db.Float(1), unique=False, default=6.0)
@@ -126,6 +126,5 @@ class Schedule(db.Model):
             { self.timeEnd02 },
             { self.timeBegin03 },
             { self.timeEnd03 }
-
         )
         return repr  

@@ -85,6 +85,7 @@ def on_handleDaemon(data):
     
     def emitIfChanges():
         if(isDataChanged()):
+            triggerActuator()
             socketio.emit('daemonProcess', getEnvironmentData().toJson())
 
     global isDaemonStarted
@@ -116,15 +117,13 @@ def saveSettings(request, db):
     settings.humidityCorrection = int( '0' if humidityCorrection == '' else humidityCorrection )
 
 def saveSchedule(request, db):
-    weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
-    dayNr = 0
+    weekDays = [1,2,3,4,5,6,7]
     db.session.query(Schedule).delete()
     for day in weekDays:
-        dayNr += 1
-        timeValues = request.form.get('timeValue'+str(dayNr)).split(",")
+        timeValues = request.form.get('timeValue'+str(day)).split(",")
         schedule = Schedule()
         schedule.weekDay = day
-        schedule.temperatureReference = float(request.form.get('temperature'+str(dayNr)))
+        schedule.temperatureReference = float(request.form.get('temperature'+str(day)))
         schedule.temperatureUm = Settings.query.get(1).temperatureUm
         schedule.timeBegin01 = float(timeValues[0])
         schedule.timeEnd01 = float(timeValues[1])
@@ -171,3 +170,20 @@ def isDataChanged():
     deltaAbs = abs(abs(previousTemperature) - abs(currentTemperature))
     minDeltaDataTrigger = float(Settings.query.get(1).minDeltaDataTrigger)
     return deltaAbs >= minDeltaDataTrigger
+
+def triggerActuator():
+    day = datetime.today().isoweekday()
+    todayReferenceTemperature = float(Schedule.query.get(day).temperatureReference)
+    todayCurrentTemperature = getEnvironmentData().get_temperature()
+    print('Day:{0} Reference Temp:{1} Current Temp:{2}'.format(day, todayReferenceTemperature, todayCurrentTemperature))
+    if (todayCurrentTemperature < todayReferenceTemperature):
+        switch(True)
+    else:
+        switch(False)
+
+def switch(status):
+    if (status):
+        print('Switch ON')
+    else:
+        print('Switch OFF')
+

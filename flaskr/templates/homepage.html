@@ -66,7 +66,7 @@
             </div>
           </div>
           <div class="col allDayDataDiv">
-            <p>SUN</p>
+            <p class="day day1">SUN</p>
           </div>
           <div class="row">
             <div class="col">
@@ -87,11 +87,11 @@
             </div>
           </div>
           <div class="col allDayDataDiv">
-            <p>MON</p>
+            <p class="day day2">MON</p>
           </div>
           <div class="row">
             <div class="col">
-              <input id="timeValue2" type="hidden" name="timeValue2" value="7.0, 9.0, 11.0, 14.0, 17.0, 22.0">                    
+              <input id="timeValue2" type="hidden" name="timeValue2" value="{{ schedule[1].timeBegin01 }}, {{ schedule[1].timeEnd01 }}, {{ schedule[1].timeBegin02 }}, {{ schedule[1].timeEnd02 }}, {{ schedule[1].timeBegin03 }}, {{ schedule[1].timeEnd03 }}">                    
               <div id="sliderTime2" class="sliderTime"></div>
               <script>
                 createTimeSlider('sliderTime2', 'timeValue2');
@@ -107,11 +107,11 @@
             </div>
           </div>
           <div class="col allDayDataDiv">
-            <p>TUE</p>
+            <p class="day day3">TUE</p>
           </div>
           <div class="row">
             <div class="col">
-              <input id="timeValue3" type="hidden" name="timeValue3" value="7.0, 9.0, 11.0, 14.0, 17.0, 22.0">                    
+              <input id="timeValue3" type="hidden" name="timeValue3" value="{{ schedule[2].timeBegin01 }}, {{ schedule[2].timeEnd01 }}, {{ schedule[2].timeBegin02 }}, {{ schedule[2].timeEnd02 }}, {{ schedule[2].timeBegin03 }}, {{ schedule[2].timeEnd03 }}">                    
               <div id="sliderTime3" class="sliderTime"></div>
               <script>
                 createTimeSlider('sliderTime3', 'timeValue3');
@@ -127,11 +127,11 @@
             </div>
           </div>
           <div class="col allDayDataDiv">
-            <p>WED</p>
+            <p class="day day4">WED</p>
           </div>
           <div class="row">
             <div class="col">
-              <input id="timeValue4" type="hidden" name="timeValue4" value="7.0, 9.0, 11.0, 14.0, 17.0, 22.0">                    
+              <input id="timeValue4" type="hidden" name="timeValue4" value="{{ schedule[3].timeBegin01 }}, {{ schedule[3].timeEnd01 }}, {{ schedule[3].timeBegin02 }}, {{ schedule[3].timeEnd02 }}, {{ schedule[3].timeBegin03 }}, {{ schedule[3].timeEnd03 }}">                    
               <div id="sliderTime4" class="sliderTime"></div>
               <script>
                 createTimeSlider('sliderTime4', 'timeValue4');
@@ -147,11 +147,11 @@
             </div>
           </div>
           <div class="col allDayDataDiv">
-            <p>THU</p>
+            <p class="day day5">THU</p>
           </div>
           <div class="row">
             <div class="col">
-              <input id="timeValue5" type="hidden" name="timeValue5" value="7.0, 9.0, 11.0, 14.0, 17.0, 22.0">                    
+              <input id="timeValue5" type="hidden" name="timeValue5" value="{{ schedule[4].timeBegin01 }}, {{ schedule[4].timeEnd01 }}, {{ schedule[4].timeBegin02 }}, {{ schedule[4].timeEnd02 }}, {{ schedule[4].timeBegin03 }}, {{ schedule[4].timeEnd03 }}">                    
               <div id="sliderTime5" class="sliderTime"></div>
               <script>
                 createTimeSlider('sliderTime5', 'timeValue5');
@@ -167,11 +167,11 @@
             </div>
           </div>
           <div class="col allDayDataDiv">
-            <p>FRI</p>
+            <p class="day day6">FRI</p>
           </div>
           <div class="row">
             <div class="col">
-              <input id="timeValue6" type="hidden" name="timeValue6" value="7.0, 9.0, 11.0, 14.0, 17.0, 22.0">                    
+              <input id="timeValue6" type="hidden" name="timeValue6" value="{{ schedule[5].timeBegin01 }}, {{ schedule[5].timeEnd01 }}, {{ schedule[5].timeBegin02 }}, {{ schedule[5].timeEnd02 }}, {{ schedule[5].timeBegin03 }}, {{ schedule[5].timeEnd03 }}">                    
               <div id="sliderTime6" class="sliderTime"></div>
               <script>
                 createTimeSlider('sliderTime6', 'timeValue6');
@@ -187,11 +187,11 @@
             </div>
           </div>
           <div class="col allDayDataDiv">
-            <p>SAT</p>
+            <p class="day day7">SAT</p>
           </div>
           <div class="row">
             <div class="col">
-              <input id="timeValue7" type="hidden" name="timeValue7" value="7.0, 9.0, 11.0, 14.0, 17.0, 22.0">                    
+              <input id="timeValue7" type="hidden" name="timeValue7" value="{{ schedule[6].timeBegin01 }}, {{ schedule[6].timeEnd01 }}, {{ schedule[6].timeBegin02 }}, {{ schedule[6].timeEnd02 }}, {{ schedule[6].timeBegin03 }}, {{ schedule[6].timeEnd03 }}">                    
               <div id="sliderTime7" class="sliderTime"></div>
               <script>
                 createTimeSlider('sliderTime7', 'timeValue7');

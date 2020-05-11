@@ -16,7 +16,6 @@ function socketIOinit() {
         var humidity = jObj._EnvironmentData__humidity;
         var sensorSimulation = jObj._EnvironmentData__sensorSimulation;
         var temperatureReached = jObj._EnvironmentData__temperatureReached;
-        console.log(jObj);
         if (sensorSimulation) {
             document.getElementById('sensorSimulation').style.display = 'block';
         } else {

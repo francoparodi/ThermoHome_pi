@@ -55,15 +55,11 @@ function createTimeSlider(sliderId, sliderValueId) {
             }
     });
 
-    slider.noUiSlider.on('update', function (values, handle, sliderValue) {
-        console.log('Previous values:' + sliderValue);
-        console.log('Values to apply:' + values);
-        console.log('Single value:' + values[handle]);
-        //From xx:xx to x.x
-        var value = formattedStringToTime(values[handle]);
-        console.log('Value converted:' + value);
-        sliderValue.value = value;
-        console.log('Values applied:' + sliderValue)
+    slider.noUiSlider.on('update', function (values, handle) {
+        for (i=0; i<6; i++) {
+            values[i] = formattedStringToTime(values[i]);
+        }
+        sliderValue.value = values;
     });
 }
 

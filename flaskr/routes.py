@@ -122,7 +122,6 @@ def saveSchedule(request, db):
     for day in weekDays:
         dayNr += 1
         timeValues = request.form.get('timeValue'+str(dayNr)).split(",")
-        print('Day {0} TimeValues {1}'.format(dayNr, timeValues))
         schedule = Schedule()
         schedule.weekDay = day
         schedule.temperatureReference = float(request.form.get('temperature'+str(dayNr)))

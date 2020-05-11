@@ -7,12 +7,14 @@ from flaskr.utils import umConversions
 
 sensorSimulation = False
 try:
-    from sense_hat import SenseHat
-    sense = SenseHat()
+    import Adafruit_DHT as sensor
 except (RuntimeError, ModuleNotFoundError):
     from flaskr.utils.sensorMock import SensorMock
-    sense = SensorMock()
+    sensor = SensorMock()
     sensorSimulation = True
+
+DHT_SENSOR = sensor.DHT22
+DHT_PIN = 4
 
 from flask_socketio import SocketIO
 
@@ -137,8 +139,9 @@ def saveSchedule(request, db):
 def setEnvironmentDataValues():
     temperatureCorrection = float(Settings.query.get(1).temperatureCorrection)
     humidityCorrection = int(Settings.query.get(1).humidityCorrection)
-    temperature = round(sense.get_temperature(), 1)
-    humidity = round(sense.get_humidity(), 1)
+    #temperature = round(sensor.get_temperature(), 1)
+    #humidity = round(sensor.get_humidity(), 1)
+    humidity, temperature = sensor.read_retry(DHT_SENSOR, DHT_PIN)
     temperatureUm = Settings.query.get(1).temperatureUm
     if (temperatureUm == '°F'):
         temperature = umConversions.celsiusToFahrenheit(temperature, 1)

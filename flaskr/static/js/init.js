@@ -31,42 +31,41 @@ function createTimeSlider(sliderId, sliderValueId) {
     var slider = document.getElementById(sliderId);
     var sliderValue = document.getElementById(sliderValueId);
     sliderValues = sliderValue.value.split(',');
-    console.log(sliderValues);
-        noUiSlider.create(slider, {
-            start: sliderValues,
-            connect: [false, true, false, true, false, true, false],
-            range: range,
-            tooltips: true,
-            orientation: 'vertical',
-            direction: 'rtl',
-            step: 0.5,
-            pips: {
-                mode: 'values',
-                values: [ 0.0,  0.5,  1.0,  1.5,  2.0,  2.5,  3.0,  3.5,  4.0,  4.5,  5.0,  5.5,  6.0,  
-                          6.5,  7.0,  7.5,  8.0,  8.5,  9.0,  9.5, 10.0, 10.5, 11.0, 11.5, 12.0, 12.5, 
-                         13.0, 13.5, 14.0, 14.5, 15.0, 15.5, 16.0, 16.5, 17.0, 17.5, 18.0, 18.5, 19.0, 
-                         19.5, 20.0, 20.5, 21.0, 21.5, 22.0, 22.5, 23.0, 23.5, 24.0],
-                stepped: false
+    noUiSlider.create(slider, {
+        start: sliderValues,
+        connect: [false, true, false, true, false, true, false],
+        range: range,
+        tooltips: true,
+        orientation: 'vertical',
+        direction: 'rtl',
+        step: 0.5,
+        pips: {
+            mode: 'values',
+            values: [ 0.0,  0.5,  1.0,  1.5,  2.0,  2.5,  3.0,  3.5,  4.0,  4.5,  5.0,  5.5,  6.0,  
+                        6.5,  7.0,  7.5,  8.0,  8.5,  9.0,  9.5, 10.0, 10.5, 11.0, 11.5, 12.0, 12.5, 
+                        13.0, 13.5, 14.0, 14.5, 15.0, 15.5, 16.0, 16.5, 17.0, 17.5, 18.0, 18.5, 19.0, 
+                        19.5, 20.0, 20.5, 21.0, 21.5, 22.0, 22.5, 23.0, 23.5, 24.0],
+            stepped: false
+        },
+        format: {
+            // 'to' Receives a number.
+            to: function (value) {
+                var strValue = String(value).split(".");
+                var hh = strValue[0];
+                var mm = "00";
+                if (strValue.length > 1) {
+                    if (strValue[1].startsWith("5")){
+                        mm = "30";
+                    }
+                } 
+                return hh + ":" + mm;
             },
-            format: {
-                // 'to' Receives a number.
-                to: function (value) {
-                    var strValue = String(value).split(".");
-                    var hh = strValue[0];
-                    var mm = "00";
-                    if (strValue.length > 1) {
-                        if (strValue[1].startsWith("5")){
-                            mm = "30";
-                        }
-                    } 
-                    return hh + ":" + mm;
-                },
-                // 'from' the formatted value.
-                // Receives a string, should return a number.
-                from: function (value) {
-                    return Number(value.replace(":3", ".5"));
-                }
+            // 'from' the formatted value.
+            // Receives a string, should return a number.
+            from: function (value) {
+                return Number(value.replace(":3", ".5"));
             }
+        }
     });
 
     slider.noUiSlider.on('update', function (values, handle) {
@@ -75,10 +74,6 @@ function createTimeSlider(sliderId, sliderValueId) {
         }
         sliderValue.value = values;
     });
-}
-
-function timeToFormattedString(t){
-
 }
 
 function formattedStringToTime(s) {

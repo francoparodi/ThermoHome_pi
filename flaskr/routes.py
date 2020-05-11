@@ -138,8 +138,6 @@ def saveSchedule(request, db):
 def setEnvironmentDataValues():
     temperatureCorrection = float(Settings.query.get(1).temperatureCorrection)
     humidityCorrection = int(Settings.query.get(1).humidityCorrection)
-    #temperature = round(sensor.get_temperature(), 1)
-    #humidity = round(sensor.get_humidity(), 1)
     humidity, temperature = sensor.read_retry(DHT_SENSOR, DHT_PIN)
     temperatureUm = Settings.query.get(1).temperatureUm
     if (temperatureUm == '°F'):
@@ -175,9 +173,12 @@ def isDataChanged():
 
 def triggerActuator():
     day = datetime.today().isoweekday()
-    todayReferenceTemperature = float(Schedule.query.get(day).temperatureReference)
+    schedule = Schedule.query.get(day)
+    if (not isInRangeTime(schedule)):
+        switch(False)
+        return
+    todayReferenceTemperature = float(schedule.temperatureReference)
     todayCurrentTemperature = getEnvironmentData().get_temperature()
-    #TODO check for interval range of time
     if (todayCurrentTemperature < todayReferenceTemperature):
         switch(True)
     else:
@@ -188,4 +189,18 @@ def switch(status):
         print('Switch ON')
     else:
         print('Switch OFF')
+
+def isInRangeTime(schedule):
+    dt = datetime.now()
+    currentTime = dt.hour
+    if (dt.minute > 29):
+        currentTime += 0.5
+
+    if ((currentTime > schedule.timeBegin01 and currentTime < schedule.timeEnd01) or
+        (currentTime > schedule.timeBegin02 and currentTime < schedule.timeEnd02) or
+        (currentTime > schedule.timeBegin03 and currentTime < schedule.timeEnd03)):
+        return True
+    else:
+        return False
+
 

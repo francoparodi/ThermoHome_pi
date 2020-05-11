@@ -25,7 +25,7 @@ daemon = threading.Thread()
 isDaemonStarted = False
 
 temperatureToReach = 20
-temperatureReached = False
+flameOn = False
 environmentData = EnvironmentData()
 
 view = Blueprint("view", __name__)
@@ -155,10 +155,10 @@ def setEnvironmentDataValues():
     getEnvironmentData().set_humidityUm(humidityUm)
     getEnvironmentData().set_sensorSimulation(sensorSimulation)
     if (temperatureToReach < temperature):
-        temperatureReached = False
+        flameOn = False
     else:
-        temperatureReached = True
-    getEnvironmentData().set_temperatureReached(temperatureReached)
+        flameOn = True
+    getEnvironmentData().set_flameOn(flameOn)
 
 def getEnvironmentData():
     return environmentData
@@ -189,6 +189,7 @@ def switch(status):
         print('Switch ON')
     else:
         print('Switch OFF')
+    getEnvironmentData().set_flameOn(status)
 
 def isInRangeTime(schedule):
     dt = datetime.now()

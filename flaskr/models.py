@@ -38,7 +38,7 @@ class EnvironmentData(object):
         self.__temperatureUm = '°C'  
         self.__humidityUm = '%'
         self.__sensorSimulation = False
-        self.__temperatureReached = False
+        self.__flameOn = False
 
     # getters
     def get_dateTime(self):
@@ -59,8 +59,8 @@ class EnvironmentData(object):
     def get_sensorSimulation(self):
         return self.__sensorSimulation
 
-    def get_temperatureReached(self):
-        return self.__temperatureReached
+    def get_flameOn(self):
+        return self.__flameOn
 
     # setters
     def set_dateTime(self, value):
@@ -81,8 +81,8 @@ class EnvironmentData(object):
     def set_sensorSimulation(self, value):
         self.__sensorSimulation = value
 
-    def set_temperatureReached(self, value):
-        self.__temperatureReached = value
+    def set_flameOn(self, value):
+        self.__flameOn = value
 
     def __repr__(self):
         repr = "{0}, {1}, {2}, {3}, {4}, {5}, {6}".format(
@@ -92,7 +92,7 @@ class EnvironmentData(object):
             { self.__temperatureUm },
             { self.__humidityUm },
             { self.__sensorSimulation },
-            { self.__temperatureReached }
+            { self.__flameOn }
         )
         return repr
 

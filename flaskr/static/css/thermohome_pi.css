@@ -48,9 +48,10 @@
 }
 
 .digitalClock {
-    font-size: 22px;
+    font-size: 20px;
     text-align: center;
     color: var(--main-color);
+    margin: 4px;
 }
 
 .sensorSimulation {
@@ -232,4 +233,5 @@
     font-style: bold;
     font-size: 14px;
     padding-left: 14px;
+    font-family: monospace;
 }

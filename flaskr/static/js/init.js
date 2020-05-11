@@ -4,7 +4,8 @@ function initOnLoad() {
 }
 
 function showDigitalClock() {
-    var date =  new Date().toLocaleString();
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    var date = new Date().toLocaleString('en-us', options);
     document.getElementById("digitalClock").innerHTML = date;
     setTimeout(showDigitalClock, 1000);
 }

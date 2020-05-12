@@ -17,16 +17,13 @@ DHT_SENSOR = sensor.DHT22
 DHT_PIN = 4
 
 from flask_socketio import SocketIO
-
 socketio = SocketIO()
+environmentData = EnvironmentData()
 
 stop_event = threading.Event()
 daemon = threading.Thread()
 isDaemonStarted = False
-
-temperatureToReach = 20
 flameOn = False
-environmentData = EnvironmentData()
 
 view = Blueprint("view", __name__)
 
@@ -112,7 +109,6 @@ def saveSettings(request, db):
     settings = Settings.query.get(1)
     settings.temperatureUm = temperatureUm
     settings.readFromSensorInterval = readFromSensorInterval
-
     settings.minDeltaDataTrigger = float( '0.0' if minDeltaDataTrigger == '' else minDeltaDataTrigger )
     settings.temperatureCorrection = float( '0.0' if temperatureCorrection == '' else temperatureCorrection )
     settings.humidityCorrection = int( '0' if humidityCorrection == '' else humidityCorrection )
@@ -154,7 +150,9 @@ def setEnvironmentDataValues():
     getEnvironmentData().set_temperatureUm(temperatureUm)  
     getEnvironmentData().set_humidityUm(humidityUm)
     getEnvironmentData().set_sensorSimulation(sensorSimulation)
-    if (temperatureToReach < temperature):
+    day = datetime.today().isoweekday()
+    schedule = Schedule.query.get(day)
+    if (schedule.temperatureReference < temperature):
         flameOn = False
     else:
         flameOn = True
@@ -167,19 +165,14 @@ def isDataChanged():
     previousTemperature = getEnvironmentData().get_temperature()
     setEnvironmentDataValues()
     currentTemperature = getEnvironmentData().get_temperature()
-    deltaAbs = abs(abs(previousTemperature) - abs(currentTemperature))
+    delta = abs(abs(previousTemperature) - abs(currentTemperature))
     minDeltaDataTrigger = float(Settings.query.get(1).minDeltaDataTrigger)
-    return deltaAbs >= minDeltaDataTrigger
+    return delta >= minDeltaDataTrigger
 
 def triggerActuator():
     day = datetime.today().isoweekday()
     schedule = Schedule.query.get(day)
-    if (not isInRangeTime(schedule)):
-        switch(False)
-        return
-    todayReferenceTemperature = float(schedule.temperatureReference)
-    todayCurrentTemperature = getEnvironmentData().get_temperature()
-    if (todayCurrentTemperature < todayReferenceTemperature):
+    if (isInRangeTime(schedule) and getEnvironmentData().get_temperature() < schedule.temperatureReference):
         switch(True)
     else:
         switch(False)
@@ -194,14 +187,13 @@ def switch(status):
 def isInRangeTime(schedule):
     dt = datetime.now()
     currentTime = dt.hour
+    # From minutes to number for comparison (7:25 -> 7.0 , 7:31 -> 7.5)
     if (dt.minute > 29):
         currentTime += 0.5
-
     if ((currentTime > schedule.timeBegin01 and currentTime < schedule.timeEnd01) or
         (currentTime > schedule.timeBegin02 and currentTime < schedule.timeEnd02) or
         (currentTime > schedule.timeBegin03 and currentTime < schedule.timeEnd03)):
         return True
-    else:
-        return False
+    return False
 
 

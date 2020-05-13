@@ -93,7 +93,7 @@ def on_handleDaemon(data):
     @copy_current_request_context
     def daemonProcess(name, stop_event):
         while not stop_event.is_set():
-            if(isDataChanged()):
+            if(isDataChanged(False)):
                 triggerActuator()
                 socketio.emit('daemonProcess', getEnvironmentData().toJson())
             time.sleep(int(Settings.query.get(1).readFromSensorInterval))
@@ -123,6 +123,7 @@ def updateSettings(request, db):
     settings.minDeltaDataTrigger = float( '0.0' if minDeltaDataTrigger == '' else minDeltaDataTrigger )
     settings.temperatureCorrection = float( '0.0' if temperatureCorrection == '' else temperatureCorrection )
     settings.humidityCorrection = int( '0' if humidityCorrection == '' else humidityCorrection )
+    triggerActuator()
 
 def saveSchedule(request, db):
     weekDays = [1,2,3,4,5,6,7]
@@ -141,6 +142,7 @@ def saveSchedule(request, db):
         schedule.timeEnd03 = float(timeValues[5])
         db.session.add(schedule)
         db.session.commit()
+        triggerActuator()
 
 def setEnvironmentDataValues():
     temperatureCorrection = float(Settings.query.get(1).temperatureCorrection)
@@ -172,7 +174,12 @@ def setEnvironmentDataValues():
 def getEnvironmentData():
     return environmentData
 
-def isDataChanged():
+def isDataChanged(forced):
+    day = datetime.today().isoweekday()
+    schedule = Schedule.query.get(day)
+    return forced or isTemperatureChanged() or isInRangeTime(schedule)
+
+def isTemperatureChanged():
     previousTemperature = getEnvironmentData().get_temperature()
     setEnvironmentDataValues()
     currentTemperature = getEnvironmentData().get_temperature()

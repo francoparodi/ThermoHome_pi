@@ -2,7 +2,6 @@ var options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric
 var language = navigator.languages[0];
 
 function initOnLoad() {
-    initDays();
     showDigitalClock(); 
     socketIOinit(); 
 }

@@ -21,9 +21,9 @@ try:
 except (RuntimeError, ModuleNotFoundError):
     import sys
     import fake_rpi
-    sys.modules['RPi'] = fake_rpi.RPi     # Fake RPi
-    sys.modules['RPi.GPIO'] = fake_rpi.RPi.GPIO # Fake GPIO
-    sys.modules['smbus'] = fake_rpi.smbus # Fake smbus (I2C)
+    sys.modules['RPi'] = fake_rpi.RPi
+    sys.modules['RPi.GPIO'] = fake_rpi.RPi.GPIO
+    sys.modules['smbus'] = fake_rpi.smbus
     import RPi.GPIO as GPIO
     import smbus
 
@@ -60,7 +60,7 @@ def settings():
 @view.route("/updateSettings", methods=["POST"])
 def updateSettings():
     try:
-        saveSettings(request, db)
+        updateSettings(request, db)
         db.session.commit()
         return redirect("/")
     except Exception as e:
@@ -69,14 +69,14 @@ def updateSettings():
         flash(msg)
     return redirect("/settings")
 
-@view.route("/updateSchedule", methods=["POST"])
-def updateSchedule():
+@view.route("/saveSchedule", methods=["POST"])
+def saveSchedule():
     try:
         saveSchedule(request, db)
         db.session.commit()
         return redirect("/")
     except Exception as e:
-        msg = "Failed to update schedule"
+        msg = "Failed to save schedule"
         print(e)
         flash(msg)
     return redirect("/homepage")
@@ -120,7 +120,7 @@ def on_handleDaemon(data):
         GPIO.cleanup()
         isDaemonStarted = False
 
-def saveSettings(request, db):
+def updateSettings(request, db):
     temperatureUm = request.form.get("temperatureUm")
     readFromSensorInterval = request.form.get("readFromSensorInterval")
     minDeltaDataTrigger = request.form.get("minDeltaDataTrigger")
@@ -213,9 +213,9 @@ def isInRangeTime(schedule):
     # From minutes to number for comparison (7:25 -> 7.0 , 7:31 -> 7.5)
     if (dt.minute > 29):
         currentTime += 0.5
-    if ((currentTime > schedule.timeBegin01 and currentTime < schedule.timeEnd01) or
-        (currentTime > schedule.timeBegin02 and currentTime < schedule.timeEnd02) or
-        (currentTime > schedule.timeBegin03 and currentTime < schedule.timeEnd03)):
+    if ((currentTime >= schedule.timeBegin01 and currentTime <= schedule.timeEnd01) or
+        (currentTime >= schedule.timeBegin02 and currentTime <= schedule.timeEnd02) or
+        (currentTime >= schedule.timeBegin03 and currentTime <= schedule.timeEnd03)):
         return True
     return False
 

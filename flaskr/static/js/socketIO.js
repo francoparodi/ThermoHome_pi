@@ -2,21 +2,20 @@ function socketIOinit() {
     var socket = io.connect('http://' + document.domain + ':' + location.port);
 
     socket.on('connect', function() {
-        console.log('Websocket connected!');
+        console.log('websocket connected');
     });
     
-    //start daemon to read temperature
+    //start daemon
     socket.emit('handleDaemon', {name: '1', action: 'START'});
 
+    //socket emit
     socket.on('daemonProcess', function(data) {
         var jObj = JSON.parse(data);
-        var requestSid = jObj.requestSid; 
         var dateTime = jObj._EnvironmentData__dateTime;
         var temperature = jObj._EnvironmentData__temperature;
         var humidity = jObj._EnvironmentData__humidity;
         var sensorSimulation = jObj._EnvironmentData__sensorSimulation;
         var flameOn = jObj._EnvironmentData__flameOn;
-        console.log(flameOn)
         if (sensorSimulation) {
             document.getElementById('sensorSimulation').style.display = 'block';
         } else {

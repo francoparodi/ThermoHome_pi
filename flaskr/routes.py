@@ -189,9 +189,7 @@ def isTemperatureChanged():
 
 def triggerActuator():
     day = datetime.today().isoweekday()
-    print('Trigger Actuator day {0}'.format(day))
     schedule = Schedule.query.get(day)
-    print('Schedule {0}'.format(schedule))
     if (isInRangeTime(schedule) and getEnvironmentData().get_temperature() < schedule.temperatureReference):
         print('Switch ON')
         GPIO.output(RELAY_GPIO, GPIO.LOW)

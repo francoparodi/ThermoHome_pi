@@ -7,16 +7,6 @@ function initOnLoad() {
     socketIOinit(); 
 }
 
-function initDays() {
-    console.log(language);
-    var date = new Date();
-    for(day=1; day<8; day++){
-        var dateToLocaleString = date.toLocaleString(language, options);    
-        document.getElementById("day"+day).innerHTML = dateToLocaleString.substring(0,3).toUpperCase();
-        date.setDate(date.getDate()+1);
-    }
-}
-
 function showDigitalClock() {
     var date = new Date().toLocaleString(language, options);
     document.getElementById("digitalClock").innerHTML = date;

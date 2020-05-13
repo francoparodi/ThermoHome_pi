@@ -142,7 +142,7 @@ def saveSchedule(request, db):
         schedule.timeEnd03 = float(timeValues[5])
         db.session.add(schedule)
         db.session.commit()
-        triggerActuator()
+    triggerActuator()
 
 def setEnvironmentDataValues():
     temperatureCorrection = float(Settings.query.get(1).temperatureCorrection)
@@ -189,7 +189,9 @@ def isTemperatureChanged():
 
 def triggerActuator():
     day = datetime.today().isoweekday()
+    print('Trigger Actuator day {0}'.format(day))
     schedule = Schedule.query.get(day)
+    print('Schedule {0}'.format(schedule))
     if (isInRangeTime(schedule) and getEnvironmentData().get_temperature() < schedule.temperatureReference):
         print('Switch ON')
         GPIO.output(RELAY_GPIO, GPIO.LOW)

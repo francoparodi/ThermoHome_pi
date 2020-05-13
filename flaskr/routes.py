@@ -1,5 +1,5 @@
 from datetime import datetime
-import sys, threading, time, json, random
+import atexit, sys, threading, time, json, random
 from flask import current_app as app
 from flask import Blueprint, render_template, flash, request, redirect, copy_current_request_context
 from flaskr.models import db, Settings, EnvironmentData, Schedule
@@ -204,4 +204,12 @@ def isInRangeTime(schedule):
         return True
     return False
 
+def cleanUp():
+    print('Safe terminating.')
+    GPIO.cleanup()
+    stop_event.set()
+    if(isDaemonStarted):
+        daemon.join()
+    stop_event.clear()
 
+atexit.register(cleanUp)

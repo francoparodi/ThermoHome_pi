@@ -16,6 +16,19 @@ except (RuntimeError, ModuleNotFoundError):
 DHT_SENSOR = sensor.DHT22
 DHT_PIN = 4
 
+try:
+    import RPi.GPIO as GPIO
+except (RuntimeError, ModuleNotFoundError):
+    import sys
+    import fake_rpi
+    sys.modules['RPi'] = fake_rpi.RPi     # Fake RPi
+    sys.modules['RPi.GPIO'] = fake_rpi.RPi.GPIO # Fake GPIO
+    sys.modules['smbus'] = fake_rpi.smbus # Fake smbus (I2C)
+    import RPi.GPIO as GPIO
+    import smbus
+
+RELAY_GPIO = 17
+
 from flask_socketio import SocketIO
 socketio = SocketIO()
 environmentData = EnvironmentData()
@@ -90,6 +103,13 @@ def on_handleDaemon(data):
     global isDaemonStarted
     if action == 'START':
         if not isDaemonStarted:
+            try:
+                GPIO.setup(RELAY_GPIO, GPIO.OUT)
+                GPIO.output(RELAY_GPIO, GPIO.LOW)
+            except Exception as ex:
+                print(ex)
+                GPIO.cleanup()
+                sys.exit(1)
             daemon.__init__(target=daemonProcess, args=('ThermoPi', stop_event), daemon=True)
             daemon.start()
             isDaemonStarted = True
@@ -97,6 +117,7 @@ def on_handleDaemon(data):
         stop_event.set()
         daemon.join()
         stop_event.clear()
+        GPIO.cleanup()
         isDaemonStarted = False
 
 def saveSettings(request, db):
@@ -180,8 +201,10 @@ def triggerActuator():
 def switch(status):
     if (status):
         print('Switch ON')
+        GPIO.output(RELAY_GPIO, GPIO.HIGH)
     else:
         print('Switch OFF')
+        GPIO.output(RELAY_GPIO, GPIO.LOW)
     getEnvironmentData().set_flameOn(status)
 
 def isInRangeTime(schedule):

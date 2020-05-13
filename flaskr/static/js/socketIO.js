@@ -16,17 +16,18 @@ function socketIOinit() {
         var humidity = jObj._EnvironmentData__humidity;
         var sensorSimulation = jObj._EnvironmentData__sensorSimulation;
         var flameOn = jObj._EnvironmentData__flameOn;
+        console.log(flameOn)
         if (sensorSimulation) {
             document.getElementById('sensorSimulation').style.display = 'block';
         } else {
             document.getElementById('sensorSimulation').style.display ='none';
         }
-        if (!flameOn) {
-            document.getElementById('flameOn').style.display = 'none';
-            document.getElementById('flameOff').style.display = 'block';
-        } else {
+        if (flameOn) {
             document.getElementById('flameOn').style.display = 'block';
             document.getElementById('flameOff').style.display = 'none';
+        } else {
+            document.getElementById('flameOn').style.display = 'none';
+            document.getElementById('flameOff').style.display = 'block';
         }
         document.getElementById('temperature').innerHTML = temperature;
         document.getElementById('humidity').innerHTML = humidity;

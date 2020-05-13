@@ -3,7 +3,13 @@ Simple flask webapp Thermostat running on [Raspberry Pi](https://www.raspberrypi
 
 Home thermostat with weekly scheduling.
 
+![Home](docs/ThermoHome_pi_home.png)
+
 Get sensor values (temperature and humidity) every "n" seconds (due to Settings section).
+
+![Settings](docs/ThermoHome_pi_settings.png)
+
+![Demo](docs/ThermoHome_pi_demo.gif)
 
 Values are sending (websocket) to client according to delta value from
 previous one (minimum delta value to trigger is specified in Setting section).
@@ -11,7 +17,9 @@ previous one (minimum delta value to trigger is specified in Setting section).
 ## Getting Started
 
 ### Prerequisites
-DHT22 hardware and Relay connected to Raspberry Pi or, if not, a "demo mode" starts automatically.
+DHT22 hardware and Relay (Songle SRD-05DC-SL-C) connected to Raspberry Pi or, if not, a "demo mode" starts automatically.
+
+![Schema](docs/ThermoHome_pi_schema.png)
 
 ### Installing
 

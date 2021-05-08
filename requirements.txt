@@ -2,7 +2,7 @@ Adafruit-Python-DHT==1.4.0
 astroid==2.3.3
 click==7.1.1
 dnspython==1.16.0
-eventlet==0.25.2
+eventlet==0.31.0
 fake-rpi==0.7.0
 flash==1.0.3
 Flask==1.1.2
